@@ -11,6 +11,6 @@ namespace Domain.Interfaces
     {
         Task<int> CreateCommentAsync(Comment comment);
         Task<List<Comment>> GetAllAsync(int top, int skip);
-        Task<List<Book>> GetAllByBook(int top, int skip, int bookId);
+        Task<List<Comment>> GetAllByBook(int top, int skip, int bookId);
     }
 }
