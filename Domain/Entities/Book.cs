@@ -10,6 +10,14 @@ namespace Domain.Entities
 {
     public class Book : Base
     {
+        public Book(int bookId, string titulo, int authorId, int genreId)
+        {
+            BookId = bookId;
+            Titulo = titulo;
+            AuthorId = authorId;
+            GenreId = genreId;
+        }
+
         public int BookId { get; set; }
         public string Titulo { get; set; }
 
