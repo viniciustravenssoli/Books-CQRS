@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repositories
 {
@@ -27,6 +28,12 @@ namespace Infra.Repositories
         public Task<List<Genre>> GetAllByName(int top, int skip, string name)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<Genre> GetGenreByIdAsync(int id)
+        {
+            return await _dbContext.Genres
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

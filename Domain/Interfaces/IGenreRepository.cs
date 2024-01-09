@@ -10,6 +10,7 @@ namespace Domain.Interfaces
     public interface IGenreRepository
     {
         Task<int> CreateGenreAsync(Genre genre);
+        Task<Genre> GetGenreByIdAsync(int id);
         Task<List<Genre>> GetAllAsync(int top, int skip);
         Task<List<Genre>> GetAllByName(int top, int skip, string name);
     }

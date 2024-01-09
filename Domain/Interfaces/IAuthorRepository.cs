@@ -10,6 +10,7 @@ namespace Domain.Interfaces
     public interface IAuthorRepository
     {
         Task<int> CreateAuthorAsync(Author author);
+        Task<Author> GetAuthorByIdAsync(int id);
         Task<List<Author>> GetAllAsync(int top, int skip);
         Task<List<Author>> GetAllByName(int top, int skip, string name);
     }
