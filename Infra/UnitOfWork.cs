@@ -1,19 +1,31 @@
 ﻿using Domain.Interfaces;
+using Infra.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    internal class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly AppDbContext _dbContext;
         private IDbContextTransaction _dbTransaction;
         private readonly IMediator _mediator;
+
+        public UnitOfWork(
+            AppDbContext dbContext,
+            IBookRepository book,
+            IGenreRepository genre,
+            IAuthorRepository author,
+            ICommentRepository comment,
+            IMediator mediator)
+        {
+            _dbContext = dbContext;
+            Book = book;
+            Genre = genre;
+            Author = author;
+            Comment = comment;
+            _mediator = mediator;
+        }
 
         public IBookRepository Book { get; }
         public IGenreRepository Genre { get; }
@@ -40,6 +52,7 @@ namespace Infra
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            await _mediator.DispatchDomainEventsAsync(_dbContext);
             return await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
