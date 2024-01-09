@@ -13,9 +13,10 @@ namespace Infra.Repositories
         {
         }
 
-        public Task<int> CreateAuthorAsync(Author author)
+        public async Task<int> CreateAuthorAsync(Author author)
         {
-            throw new NotImplementedException();
+            await _dbContext.Authors.AddAsync(author);
+            return author.Id;
         }
 
         public Task<List<Author>> GetAllAsync(int top, int skip)

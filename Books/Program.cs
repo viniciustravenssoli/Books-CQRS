@@ -1,3 +1,6 @@
+using Application.Commands.Authors.CreateAuthor;
+using Application.Commands.Genres;
+using Application.Configuration;
 using Infra;
 using Infra.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -6,11 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
-
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblyContaining(typeof(CreateAuthorCommand));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
