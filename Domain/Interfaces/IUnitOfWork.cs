@@ -12,6 +12,7 @@ namespace Domain.Interfaces
         ICommentRepository Comment { get; }
         IAuthorRepository Author { get; }
         IBookRepository Book { get; }
+        IUserRepository User { get; }
 
         Task BeginTransactionAsync();
         Task CommitAsync();
