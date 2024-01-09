@@ -17,7 +17,8 @@ namespace Infra
             IGenreRepository genre,
             IAuthorRepository author,
             ICommentRepository comment,
-            IMediator mediator)
+            IMediator mediator,
+            IUserRepository user)
         {
             _dbContext = dbContext;
             Book = book;
@@ -25,12 +26,14 @@ namespace Infra
             Author = author;
             Comment = comment;
             _mediator = mediator;
+            User = user;
         }
 
         public IBookRepository Book { get; }
         public IGenreRepository Genre { get; }
         public IAuthorRepository Author { get; }
         public ICommentRepository Comment { get; }
+        public IUserRepository User { get; }
 
         public async Task BeginTransactionAsync()
         {
