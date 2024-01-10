@@ -26,11 +26,11 @@ namespace Application.Commands.Books
 
             var genre = await _unitOfWork.Genre.GetGenreByIdAsync(book.GenreId);
             if (genre is null)
-                return Result<int>.Failure(BookErrors.NotFoundDonorGenre, ResultStatusCodeEnum.NotFound);
+                return Result<int>.Failure(BookErrors.NotFoundGenre, ResultStatusCodeEnum.NotFound);
 
             var author = await _unitOfWork.Author.GetAuthorByIdAsync(book.AuthorId);
             if (author is null)
-                return Result<int>.Failure(BookErrors.NotFoundDonorAuthor, ResultStatusCodeEnum.NotFound);
+                return Result<int>.Failure(BookErrors.NotFoundAuthor, ResultStatusCodeEnum.NotFound);
 
             await _unitOfWork.BeginTransactionAsync();
             await _unitOfWork.Book.CreateBookAsync(book);

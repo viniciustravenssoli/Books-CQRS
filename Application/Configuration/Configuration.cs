@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Configuration
@@ -14,6 +16,8 @@ namespace Application.Configuration
             //Fluent Validation
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
+
+
             return services;
         }
     }
