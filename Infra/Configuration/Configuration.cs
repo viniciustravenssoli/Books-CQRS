@@ -1,6 +1,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Infra.Repositories;
+using Infra.Token;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@ namespace Infra.Configuration
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDefaultIdentity<User>()

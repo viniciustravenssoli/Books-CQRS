@@ -47,5 +47,13 @@ namespace Infra.Repositories
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.DeleteAsync(user);
         }
+
+        public async Task<bool> CheckPasswordAsync(User user, string password)
+        {
+           var isCorrect = await _userManager.CheckPasswordAsync(user, password);
+           return isCorrect;
+        }
+
+        
     }
 }
