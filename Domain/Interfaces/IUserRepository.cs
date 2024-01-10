@@ -15,5 +15,7 @@ namespace Domain.Interfaces
         Task<IdentityResult> CreateUserAsync(User user, string password);
         Task<IdentityResult> UpdateUserAsync(User user);
         Task<IdentityResult> DeleteUserAsync(string userId);
+        Task<bool> CheckPasswordAsync(User user, string password);
+        
     }
 }
