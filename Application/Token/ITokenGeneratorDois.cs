@@ -5,9 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Domain.Entities;
 
-namespace Domain.Interfaces
+namespace Application.Token
 {
-    public interface ITokenGenerator
+    public interface ITokenGeneratorDois
     {
         Task<string> GenerateJwtToken(User user);
 

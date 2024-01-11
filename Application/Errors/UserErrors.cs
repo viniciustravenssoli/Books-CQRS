@@ -8,7 +8,7 @@ namespace Application.Errors
 {
     public class UserErrors
     {
-         public static ResultError NotFoundUser => new ResultError("not_found_user", "This User was not found");
-        public static ResultError NotFound => new ResultError("not_found_genre", "This Genre was not found");
+        public static ResultError NotFoundUser => new ResultError("not_found_user", "This User was not found");
+        public static ResultError UserAlredyExist => new ResultError("email_is_used", "This User already exists");
     }
 }

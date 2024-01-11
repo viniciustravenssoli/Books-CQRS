@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Token;
 using Domain.Entities;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ namespace Application.Configuration
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<ITokenGeneratorDois, TokenGeneratorDois>();
             //Fluent Validation
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();

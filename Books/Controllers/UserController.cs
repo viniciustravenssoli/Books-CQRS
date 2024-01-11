@@ -15,18 +15,18 @@ namespace Books.Controllers
         {
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Create(CreateUserCommand command)
         {
             var result = await _mediator.Send(command);
-            return StatusCode((int)result.StatusCode, result.GetFinalObject());
+            return Ok(result);
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginUserCommand command)
         {
             var result = await _mediator.Send(command);
-            return StatusCode((int)result.StatusCode, result.GetFinalObject());
+            return Ok(result);
         }
     }
 }

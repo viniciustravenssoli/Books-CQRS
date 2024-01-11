@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Errors;
+using Application.Token;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Result;
@@ -13,13 +14,13 @@ namespace Application.Commands.Users.Login
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result<string>>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ITokenGenerator _tokenGenerator;
+        private readonly ITokenGeneratorDois _tokenGeneratorDois;
 
 
-        public LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenGenerator tokenGenerator)
+        public LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenGeneratorDois tokenGeneratorDois)
         {
             _unitOfWork = unitOfWork;
-            _tokenGenerator = tokenGenerator;
+            _tokenGeneratorDois = tokenGeneratorDois;
         }
 
         public async Task<Result<string>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
@@ -34,9 +35,9 @@ namespace Application.Commands.Users.Login
             if (!isCorrect)
                 return Result<string>.Failure(UserErrors.NotFoundUser, ResultStatusCodeEnum.NotFound);
 
-            var token = await _tokenGenerator.GenerateJwtToken(existingUser);
+            var token = await _tokenGeneratorDois.GenerateJwtToken(existingUser);
 
-            return Result<string>.Success(token);
+            return Result<string>.Success(token, "testetoken");
         }
     }
 }

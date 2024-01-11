@@ -6,21 +6,19 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
-using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infra.Token
+namespace Application.Token
 {
-    public class TokenGenerator : ITokenGenerator
+    public class TokenGeneratorDois : ITokenGeneratorDois
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AppDbContext _context;
 
-        public TokenGenerator(AppDbContext dbContext, UserManager<User> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager) 
+        public TokenGeneratorDois(UserManager<User> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _configuration = configuration;
