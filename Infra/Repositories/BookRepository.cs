@@ -54,5 +54,12 @@ namespace Infra.Repositories
 
             return books;
         }
+
+        public async Task<Book> GetBookById(int id)
+        {
+            var book = await _dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
+
+            return book;
+        }
     }
 }

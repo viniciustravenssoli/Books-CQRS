@@ -11,5 +11,6 @@ namespace Application.Errors
         
         public static ResultError NotFoundAuthor => new ResultError("not_found_author", "This Author was not found");
         public static ResultError NotFoundGenre => new ResultError("not_found_genre", "This Genre was not found");
+        public static ResultError NotFoundBook => new ResultError("not_found_book", "This Book was not found");
     }
 }
