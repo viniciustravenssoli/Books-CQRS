@@ -14,6 +14,7 @@ namespace Application.Commands.Comments.PostComment
         public string Content { get; set; }
         public DateTime CommentDate { get; set; } = DateTime.Now;
         public int BookId { get; set; }
-        public string UserId { get; set; }
+        [JsonIgnore]
+        public string? UserId { get; set; }
     }
 }
