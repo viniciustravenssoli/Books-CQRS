@@ -33,8 +33,7 @@ namespace Application.Commands.Users
             await _unitOfWork.CommitAsync();
 
             if (!isCreated.Succeeded)
-                return Result<string>.Failure(isCreated.Errors.Select(x => x.Description).ToList());
-
+                return Result<string>.Failure(isCreated.Errors.Select(error => new ResultError(error.Code, error.Description)).ToList());
 
             return Result<string>.Success($"Usuario {newUser.Email}, Registrado com sucesso");
         }

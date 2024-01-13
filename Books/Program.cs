@@ -1,11 +1,8 @@
 using System.Text;
 using Application.Commands.Authors.CreateAuthor;
-using Application.Commands.Genres;
 using Application.Configuration;
-using Infra;
 using Infra.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
