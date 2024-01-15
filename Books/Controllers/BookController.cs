@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Commands.Books;
+using Application.Commands.Books.Delete;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,15 @@ namespace Books.Controllers
         public async Task<IActionResult> Create(CreateBookCommand command)
         {
             var result = await _mediator.Send(command);
+            return StatusCode((int)result.StatusCode, result.GetFinalObject());
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteBookCommand { Id = id };
+            var result = await _mediator.Send(command);
+
             return StatusCode((int)result.StatusCode, result.GetFinalObject());
         }
     }
