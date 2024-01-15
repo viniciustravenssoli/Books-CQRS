@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IAuthorRepository
+    public interface IAuthorRepository : IBaseRepository<Author>
     {
         Task<int> CreateAuthorAsync(Author author);
         Task<Author> GetAuthorByIdAsync(int id);

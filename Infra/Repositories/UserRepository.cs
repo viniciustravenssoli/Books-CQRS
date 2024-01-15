@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repositories
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
         private readonly UserManager<User> _userManager;
         public UserRepository(AppDbContext dbContext, UserManager<User> userManager) : base(dbContext)

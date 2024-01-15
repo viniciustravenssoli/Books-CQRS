@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IBookRepository
+    public interface IBookRepository : IBaseRepository<Book>
     {
         Task<int> CreateBookAsync(Book book);
         Task<Book> GetBookById(int id);

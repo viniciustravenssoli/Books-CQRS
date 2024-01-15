@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IGenreRepository
+    public interface IGenreRepository : IBaseRepository<Genre>
     {
         Task<int> CreateGenreAsync(Genre genre);
         Task<Genre> GetGenreByIdAsync(int id);

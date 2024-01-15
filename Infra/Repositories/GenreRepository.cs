@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repositories
 {
-    public class GenreRepository : BaseRepository, IGenreRepository
+    public class GenreRepository : BaseRepository<Genre>, IGenreRepository
     {
         public GenreRepository(AppDbContext dbContext) : base(dbContext)
         {

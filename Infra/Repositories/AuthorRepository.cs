@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repositories
 {
-    public class AuthorRepository : BaseRepository, IAuthorRepository
+    public class AuthorRepository : BaseRepository<Author>, IAuthorRepository
     {
         public AuthorRepository(AppDbContext dbContext) : base(dbContext)
         {

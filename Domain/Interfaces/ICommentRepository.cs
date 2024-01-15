@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface ICommentRepository
+    public interface ICommentRepository : IBaseRepository<Comment>
     {
         Task<int> CreateCommentAsync(Comment comment);
         Task<List<Comment>> GetAllAsync(int top, int skip);
