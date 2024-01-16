@@ -31,11 +31,22 @@ namespace Infra.Repositories
             return books;
         }
 
-        public async Task<List<Book>> GetAllByAuthor(int top, int skip, string author)
+        public async Task<List<Book>> GetAllAsyncByName(int top, int skip, string title)
+        {
+            var filteredBooks = await _dbContext.Books
+               .Where(a => EF.Functions.Like(a.Titulo, $"%{title}%"))
+               .Skip(skip)
+               .Take(top)
+               .ToListAsync();
+
+            return filteredBooks;
+        }
+
+        public async Task<List<Book>> GetAllByAuthorId(int top, int skip, int authorId)
         {
             var books = await _dbContext.Books
                 .AsNoTracking()
-                .Where(x => x.Author.Name.Equals(author, StringComparison.OrdinalIgnoreCase))
+                .Where(x => x.Author.Id == authorId)
                 .Skip(skip)
                 .Take(top)
                 .ToListAsync();
@@ -57,9 +68,8 @@ namespace Infra.Repositories
 
         public async Task<Book> GetBookById(int id)
         {
-            var book = await _dbContext.Books.FirstOrDefaultAsync(x => x.BookId == id);
-
-            return book;
+            return await _dbContext.Books
+                .FirstOrDefaultAsync(x => x.BookId == id);
         }
     }
 }

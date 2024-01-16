@@ -12,7 +12,8 @@ namespace Domain.Interfaces
         Task<int> CreateBookAsync(Book book);
         Task<Book> GetBookById(int id);
         Task<List<Book>> GetAllAsync(int top, int skip);
+        Task<List<Book>> GetAllAsyncByName(int top, int skip, string title);
         Task<List<Book>> GetAllByGenre(int top, int skip, string genre);
-        Task<List<Book>> GetAllByAuthor(int top, int skip, string author);
+        Task<List<Book>> GetAllByAuthorId(int top, int skip, int authorId);
     }
 }
