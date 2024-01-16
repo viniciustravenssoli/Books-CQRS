@@ -13,7 +13,7 @@ namespace Application.ViewModels
 
         public static implicit operator AuthorViewModel(Author author)
         {
-            if (author == null) 
+            if (author is null) 
                 return null;
             return new()
             {
