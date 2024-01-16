@@ -20,9 +20,16 @@ namespace Infra.Repositories
             return genre.Id;
         }
 
-        public Task<List<Genre>> GetAllAsync(int top, int skip)
+        public async Task<List<Genre>> GetAllAsync(int top, int skip)
         {
-            throw new NotImplementedException();
+            var genres = await _dbContext.Genres
+                                .Include(x => x.Books)
+                                .AsNoTracking()
+                                .Skip(skip)
+                                .Take(top)
+                                .ToListAsync();
+
+            return genres;
         }
 
         public Task<List<Genre>> GetAllByName(int top, int skip, string name)

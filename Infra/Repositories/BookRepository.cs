@@ -31,7 +31,7 @@ namespace Infra.Repositories
             return books;
         }
 
-        public async Task<List<Book>> GetAllAsyncByName(int top, int skip, string title)
+        public async Task<List<Book>> GetAllAsyncByTitle(int top, int skip, string title)
         {
             var filteredBooks = await _dbContext.Books
                .Where(a => EF.Functions.Like(a.Titulo, $"%{title}%"))
