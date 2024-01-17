@@ -1,6 +1,7 @@
 using System.Text;
 using Application.Commands.Authors.CreateAuthor;
 using Application.Configuration;
+using Books.Middlewares;
 using Infra.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 
 IConfiguration _configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -25,7 +28,7 @@ var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
-                RequireExpirationTime = false,
+                RequireExpirationTime = true,
                 ClockSkew = TimeSpan.Zero
             };
 
@@ -42,10 +45,12 @@ var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
                 x.TokenValidationParameters = tokenValidationParams;
             });
 
+
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssemblyContaining(typeof(CreateAuthorCommand));
 });
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
