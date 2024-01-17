@@ -1,7 +1,7 @@
 # Books Info
 
 ## Descrição
-Uma WebApi, que realiza autenticação e autorização de usuarios, CRUD de livros, comentarios, generos e autores com seus respectivos relacionamentos, nele tento aplicar alguns concetios do CQRS e Repository Pattern
+Uma WebApi, que realiza autenticação e autorização de usuarios, CRUD de livros, comentarios, generos e autores com seus respectivos relacionamentos, nele tento aplicar alguns conceitos do CQRS e Repository Pattern
 
 ## Tecnologias Utilizadas
 - **.NET Core**: Framework de desenvolvimento rápido e multiplataforma.
