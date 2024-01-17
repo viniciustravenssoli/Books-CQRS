@@ -41,7 +41,6 @@ namespace Infra.Repositories
             .ToListAsync();
 
             return commentsFromBook;
-
         }
     }
 }
