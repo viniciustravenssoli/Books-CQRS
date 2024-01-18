@@ -5,6 +5,8 @@ namespace Domain.Entities
 {
     public class Author : Base
     {
+        public Author()
+        {}
         public Author(int id, string name)
         {
             Id = id;

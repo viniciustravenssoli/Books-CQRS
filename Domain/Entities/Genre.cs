@@ -5,6 +5,10 @@ namespace Domain.Entities
 {
     public class Genre : Base
     {
+        public Genre()
+        {
+;
+        }
         public Genre(int id, string name)
         {
             Id = id;

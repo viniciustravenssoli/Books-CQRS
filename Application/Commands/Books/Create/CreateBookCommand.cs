@@ -9,6 +9,14 @@ namespace Application.Commands.Books
 {
     public class CreateBookCommand : IRequest<Result<int>>
     {
+        public CreateBookCommand(int bookId, string titulo, int authorId, int genreId)
+        {
+            BookId = bookId;
+            Titulo = titulo;
+            AuthorId = authorId;
+            GenreId = genreId;
+        }
+
         public int BookId { get; set; }
         public string Titulo { get; set; }
         public int AuthorId { get; set; }

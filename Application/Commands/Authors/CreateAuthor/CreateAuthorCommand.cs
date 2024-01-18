@@ -9,6 +9,12 @@ namespace Application.Commands.Authors.CreateAuthor
 {
     public class CreateAuthorCommand : IRequest<Result<int>>
     {
+        public CreateAuthorCommand(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
     }
