@@ -36,7 +36,7 @@ namespace Tests.Commands
         {
             // Arrange
             var cancellationToken = new CancellationToken();
-            var request = new CreateBookCommand(1, "Example Book", 1 , 1);
+            var request = new CreateBookCommand(1, "Example Book", 1, 1);
 
             _mockUnitOfWork.Setup(uow => uow.Genre.GetGenreByIdAsync(It.IsAny<int>())).ReturnsAsync(new Genre());
             _mockUnitOfWork.Setup(uow => uow.Author.GetAuthorByIdAsync(It.IsAny<int>())).ReturnsAsync(new Author());
@@ -60,10 +60,9 @@ namespace Tests.Commands
         public async Task Handle_CreateBook_Failure_GenreNotFound()
         {
             // Arrange
-            var request = new CreateBookCommand(1, "Example Book", 1 , 1);
+            var request = new CreateBookCommand(1, "Example Book", 1, 1);
 
-
-            _mockUnitOfWork.Setup(uow => uow.Genre.GetGenreByIdAsync(It.IsAny<int>())).ReturnsAsync(new Genre());
+            _mockUnitOfWork.Setup(uow => uow.Genre.GetGenreByIdAsync(It.IsAny<int>())).ReturnsAsync((Genre)null);
             var commandHandler = new CreateBookCommandHandler(_mockUnitOfWork.Object);
 
             // Act
@@ -77,16 +76,24 @@ namespace Tests.Commands
 
             Assert.False(result.IsSuccessful);
             Assert.Equal(ResultStatusCodeEnum.NotFound, result.StatusCode);
+
+            Assert.NotNull(result.Errors);
+            Assert.IsType<List<ResultError>>(result.Errors);
+
+            var firstError = result.Errors.FirstOrDefault(); 
+
+            Assert.NotNull(firstError);
+            Assert.Equal(BookErrors.NotFoundGenre.Key, firstError.Key);
         }
 
         [Fact]
         public async Task Handle_CreateBook_Failure_AuthorNotFound()
         {
             // Arrange
-            var request = new CreateBookCommand(1, "Example Book", 1 , 1);
+            var request = new CreateBookCommand(1, "Example Book", 1, 1);
 
             _mockUnitOfWork.Setup(uow => uow.Genre.GetGenreByIdAsync(It.IsAny<int>())).ReturnsAsync(new Genre());
-            _mockUnitOfWork.Setup(uow => uow.Author.GetAuthorByIdAsync(It.IsAny<int>())).ReturnsAsync(new Author());
+            _mockUnitOfWork.Setup(uow => uow.Author.GetAuthorByIdAsync(It.IsAny<int>())).ReturnsAsync((Author)null);
 
 
             var commandHandler = new CreateBookCommandHandler(_mockUnitOfWork.Object);
@@ -97,11 +104,20 @@ namespace Tests.Commands
             // Assert
             _mockUnitOfWork.Verify(uow => uow.BeginTransactionAsync(), Times.Never);
             _mockUnitOfWork.Verify(uow => uow.Book.CreateBookAsync(It.IsAny<Book>()), Times.Never);
-            _mockUnitOfWork.Verify(uow => uow.SaveChangesAsync(new CancellationToken()), Times.Never);
+            _mockUnitOfWork.Verify(uow => uow.SaveChangesAsync(CancellationToken.None), Times.Never);
             _mockUnitOfWork.Verify(uow => uow.CommitAsync(), Times.Never);
+
 
             Assert.False(result.IsSuccessful);
             Assert.Equal(ResultStatusCodeEnum.NotFound, result.StatusCode);
+
+            Assert.NotNull(result.Errors);
+            Assert.IsType<List<ResultError>>(result.Errors);
+
+            var firstError = result.Errors.FirstOrDefault(); 
+
+            Assert.NotNull(firstError);
+            Assert.Equal(BookErrors.NotFoundAuthor.Key, firstError.Key);
         }
     }
 }
