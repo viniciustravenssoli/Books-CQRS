@@ -50,6 +50,7 @@ Para postar um comentário, é necessário autenticar-se primeiro. Siga os passo
 
     - Parâmetros do corpo da solicitação: `email` e `password`.
     - Este endpoint retornará um token JWT após uma autenticação bem-sucedida.
+    - **Nota: O token JWT possui uma duração de 10 minutos. Certifique-se de renová-lo conforme necessário.**
 
 1. 1 Caso não possua um usuário, é necessário realizar o registro antes de efetuar o login.
 
