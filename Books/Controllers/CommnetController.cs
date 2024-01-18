@@ -27,7 +27,7 @@ namespace Books.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("post")]
         public async Task<IActionResult> Create(CreateCommentCommand command)
         {
             var userIdToken = User.Claims.FirstOrDefault(claim => claim.Type == "Id")?.Value;

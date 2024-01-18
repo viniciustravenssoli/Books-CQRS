@@ -37,7 +37,7 @@ namespace Application.Commands.Users.Login
 
             var token = await _tokenGeneratorDois.GenerateJwtToken(existingUser);
 
-            return Result<string>.Success(token, "testetoken");
+            return Result<string>.Success(token);
         }
     }
 }
