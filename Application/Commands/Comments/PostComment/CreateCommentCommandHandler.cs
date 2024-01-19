@@ -23,13 +23,13 @@ namespace Application.Commands.Comments.PostComment
         {
             var existingBook = await _unitOfWork.Book.GetBookById(request.BookId);
 
-            if (existingBook == null)
-                return Result<string>.Failure(BookErrors.NotFoundBook, ResultStatusCodeEnum.BadRequest);
+            if (existingBook is null)
+                return Result<string>.Failure(BookErrors.NotFoundBook, ResultStatusCodeEnum.NotFound);
 
             var existingUser = await _unitOfWork.User.GetUserByIdAsync(request.UserId);
 
-            if (existingUser == null)
-                return Result<string>.Failure(UserErrors.NotFoundUser, ResultStatusCodeEnum.BadRequest);
+            if (existingUser is null)
+                return Result<string>.Failure(UserErrors.NotFoundUser, ResultStatusCodeEnum.NotFound);
 
             var comment = new Comment(request.Id, request.Content, request.CommentDate, request.BookId, request.UserId);
 

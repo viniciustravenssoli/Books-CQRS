@@ -10,6 +10,15 @@ namespace Application.Commands.Comments.PostComment
 {
     public class CreateCommentCommand : IRequest<Result<string>>
     {
+        public CreateCommentCommand(int id, string content, DateTime commentDate, int bookId, string? userId)
+        {
+            Id = id;
+            Content = content;
+            CommentDate = commentDate;
+            BookId = bookId;
+            UserId = userId;
+        }
+
         public int Id { get; set; }
         public string Content { get; set; }
         public DateTime CommentDate { get; set; } = DateTime.Now;
