@@ -95,7 +95,6 @@ namespace Tests.Commands
             _mockUnitOfWork.Setup(uow => uow.Genre.GetGenreByIdAsync(It.IsAny<int>())).ReturnsAsync(new Genre());
             _mockUnitOfWork.Setup(uow => uow.Author.GetAuthorByIdAsync(It.IsAny<int>())).ReturnsAsync((Author)null);
 
-
             var commandHandler = new CreateBookCommandHandler(_mockUnitOfWork.Object);
 
             // Act
