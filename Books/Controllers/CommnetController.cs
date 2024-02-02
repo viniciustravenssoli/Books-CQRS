@@ -32,7 +32,6 @@ namespace Books.Controllers
         {
             var userIdToken = User.Claims.FirstOrDefault(claim => claim.Type == "Id")?.Value;
 
-            command.UserId = userIdToken;
             var result = await _mediator.Send(command);
             return Ok(result);
         }

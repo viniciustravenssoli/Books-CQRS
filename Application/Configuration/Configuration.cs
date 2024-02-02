@@ -18,6 +18,7 @@ namespace Application.Configuration
             //Fluent Validation
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
+            services.AddHttpContextAccessor();
 
 
             return services;

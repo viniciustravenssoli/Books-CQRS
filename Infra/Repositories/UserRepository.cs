@@ -53,7 +53,6 @@ namespace Infra.Repositories
            var isCorrect = await _userManager.CheckPasswordAsync(user, password);
            return isCorrect;
         }
-
-        
+  
     }
 }

@@ -22,7 +22,7 @@ namespace Domain.Entities
 
         public int CountBooks()
         {
-            return Books?.Count() ?? 0;
+            return Books?.Count ?? 0;
         }
     }
 }

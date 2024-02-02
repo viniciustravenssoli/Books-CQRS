@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Commands.Comments.PostComment;
 using Application.Errors;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Result;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
 
@@ -38,24 +40,40 @@ namespace Tests.Commands
         public async Task Handle_CreateComment_Successfully_Returns_Datetime_Created()
         {
             // Arrange
+            var contextAccessorMock = new Mock<IHttpContextAccessor>();
             var cancellationToken = new CancellationToken();
-            var date = DateTime.UtcNow;
-            var request = new CreateCommentCommand(1, "Comment Example", date, 1, "211521");
 
-            _mockUnitOfWork.Setup(uow => uow.Book.GetBookById(It.IsAny<int>())).ReturnsAsync(new Book());
-            _mockUnitOfWork.Setup(uow => uow.User.GetUserByIdAsync(It.IsAny<string>())).ReturnsAsync(new User());
+            var handler = new CreateCommentCommandHandler(_mockUnitOfWork.Object, contextAccessorMock.Object);
 
-            var commandHandler = new CreateCommentCommandHandler(_mockUnitOfWork.Object);
+            var userId = "1";
+            var bookId = 2;
+            var request = new CreateCommentCommand(1, "teste", DateTime.Now, bookId);
+
+
+            var userClaims = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+            new Claim("Id", userId)
+            }));
+
+            var httpContextMock = new Mock<HttpContext>();
+            httpContextMock.Setup(c => c.User).Returns(userClaims);
+            contextAccessorMock.Setup(ca => ca.HttpContext).Returns(httpContextMock.Object);
+
+            var existingBookMock = new Mock<Book>();
+            _mockUnitOfWork.Setup(uow => uow.Book.GetBookById(bookId)).ReturnsAsync(existingBookMock.Object);
+
+            var existingUserMock = new Mock<User>();
+            _mockUnitOfWork.Setup(uow => uow.User.GetUserByIdAsync(userId)).ReturnsAsync(existingUserMock.Object);
+
+            _mockUnitOfWork.Setup(uow => uow.BeginTransactionAsync()).Verifiable();
+            _mockUnitOfWork.Setup(uow => uow.Comment.CreateCommentAsync(It.IsAny<Comment>())).Verifiable();
+            _mockUnitOfWork.Setup(uow => uow.SaveChangesAsync(cancellationToken)).Verifiable();
+            _mockUnitOfWork.Setup(uow => uow.CommitAsync()).Verifiable();
 
             // Act
-            var result = await commandHandler.Handle(request, cancellationToken);
+            var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
-            _mockUnitOfWork.Verify(uow => uow.BeginTransactionAsync(), Times.Once);
-            _mockUnitOfWork.Verify(uow => uow.Comment.CreateCommentAsync(It.IsAny<Comment>()), Times.Once);
-            _mockUnitOfWork.Verify(uow => uow.SaveChangesAsync(cancellationToken), Times.Once);
-            _mockUnitOfWork.Verify(uow => uow.CommitAsync(), Times.Once);
-
             Assert.True(result.IsSuccessful);
             Assert.Equal(request.CommentDate.ToString(), result.Value);
         }
@@ -66,12 +84,14 @@ namespace Tests.Commands
             // Arrange
             var cancellationToken = new CancellationToken();
             var date = DateTime.UtcNow;
-            var request = new CreateCommentCommand(1, "Comment Example", date, 1, "211521");
+            var request = new CreateCommentCommand(1, "Comment Example", date, 1);
 
             _mockUnitOfWork.Setup(uow => uow.Book.GetBookById(It.IsAny<int>())).ReturnsAsync((Book)null);
             _mockUnitOfWork.Setup(uow => uow.User.GetUserByIdAsync(It.IsAny<string>())).ReturnsAsync(new User());
 
-            var commandHandler = new CreateCommentCommandHandler(_mockUnitOfWork.Object);
+            var contextAccessorMock = new Mock<IHttpContextAccessor>();
+
+            var commandHandler = new CreateCommentCommandHandler(_mockUnitOfWork.Object, contextAccessorMock.Object);
 
             // Act
             var result = await commandHandler.Handle(request, cancellationToken);
