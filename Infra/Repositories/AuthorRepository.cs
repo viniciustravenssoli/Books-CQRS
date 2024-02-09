@@ -40,7 +40,7 @@ namespace Infra.Repositories
             return filteredAuthors;
         }
 
-        public async Task<Author> GetAuthorByIdAsync(int id)
+        public async Task<Author?> GetAuthorByIdAsync(int id)
         {
             return await _dbContext.Authors
                 .FirstOrDefaultAsync(x => x.Id == id);

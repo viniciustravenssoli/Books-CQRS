@@ -7,6 +7,7 @@ using Application.Commands.Genres.Delete;
 using Application.Queries.Genre.GetAllGenre;
 using Domain.Helpers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Books.Controllers
@@ -17,6 +18,7 @@ namespace Books.Controllers
         {
         }
 
+        [Authorize]
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll([FromQuery] PageQuery pageQuery)
         {
